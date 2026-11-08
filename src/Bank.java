@@ -1,29 +1,27 @@
-public class BankAccount {
-    private String accountNumber;
-    private String accountHolderName;
-    private double balance;
+import java.util.ArrayList;
 
-    public BankAccount(String accountNumber, String accountHolderName){
-        this.accountNumber = accountNumber;
-        this.accountHolderName = accountHolderName;
+public class Bank {
+    String bankName;
+    ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
+    int nextAccountNumber;
+
+    public BankAccount createAccount(String accountHolderName){
+        String accountNumber = String.valueOf(nextAccountNumber);
+        BankAccount account = new BankAccount(accountNumber, accountHolderName);
+        accounts.add(account);
+        nextAccountNumber++;
+
+        return account;
     }
 
-    public String getAccountNumber(){
-        return accountNumber;
+    public BankAccount findAccount(String accountNumber){
+        for(BankAccount account : accounts){
+            if(account.getAccountNumber() == accountNumber){
+                return account;
+            }
+        }
+
+        return null;
     }
-
-    public void setAccountNumber(String accountNumber){
-        this.accountNumber = accountNumber;
-    }
-
-    public String getAccountHolderName(){
-        return accountHolderName;
-    }
-
-    public void setAccountHolderName(String accountHolderName){
-        this.accountHolderName = accountHolderName;
-    }
-
-
 
 }
