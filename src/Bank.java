@@ -5,6 +5,12 @@ public class Bank {
     ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
     int nextAccountNumber;
 
+    public Bank(String bankName){
+        this.bankName = bankName;
+        this.accounts = new ArrayList<>(accounts);
+        this.nextAccountNumber = 1001;
+    }
+
     public BankAccount createAccount(String accountHolderName){
         String accountNumber = String.valueOf(nextAccountNumber);
         BankAccount account = new BankAccount(accountNumber, accountHolderName);
