@@ -24,4 +24,31 @@ public class Bank {
         return null;
     }
 
-}
+    public boolean transfer(String senderAccountNumber, String receiverAccountNumber, double amount){
+        BankAccount sender = findAccount(senderAccountNumber);
+        BankAccount receiver = findAccount(receiverAccountNumber);
+        if((sender == null || receiver == null)){
+            System.out.println("Please enter the account number of the account you want to transfer to!");
+            return false;
+        }
+        else if (sender == receiver) {
+            System.out.println("Cannot transfer to the same account!");
+            return false;
+        }
+        else if(amount > 0 && amount <=sender.getBalance()){
+            sender.withdraw(amount);
+            receiver.deposit(amount);
+            System.out.println("Transfer has been proceed successfully!");
+            return true;
+        }
+        else{
+            System.out.println("Unsuccesfully Transfered! Please try again!");
+            return false;
+        }
+
+    }
+
+    public  ArrayList<BankAccount> listAccount(){
+        return new ArrayList<>(accounts);
+    }
+};
