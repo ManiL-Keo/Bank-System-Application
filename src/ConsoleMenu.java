@@ -45,7 +45,7 @@ public class ConsoleMenu {
                     BankAccount account = bank.findAccount(accountNumber);
 
                     if(account == null){
-                        System.out.println("Account not found");
+                        System.out.println("Account not found!");
                         break;
                     }
 
@@ -56,35 +56,74 @@ public class ConsoleMenu {
 
                 case 3:
                     System.out.println("Enter your account number: ");
-                    String dAccountNumber = scanner.nextLine();
+                    String depositAccountNumber = scanner.nextLine();
 
-                    BankAccount dAcc = bank.findAccount(dAccountNumber);
+                    BankAccount depositAcc = bank.findAccount(depositAccountNumber);
 
-                    if(dAcc == null){
-                        System.out.println("Account not found.");
+                    if(depositAcc == null){
+                        System.out.println("Account not found!");
                         break;
                     }
                     System.out.println("Enter the deposit amount: ");
-                    double amount = scanner.nextDouble();
+                    double depositAmount = scanner.nextDouble();
                     scanner.nextLine();
-                    dAcc.deposit(amount);
+                    depositAcc.deposit(depositAmount);
                     break;
                 case 4:
                     System.out.println("Enter your account number: ");
-                    String wAccountNumber = scanner.nextLine();
+                    String withdrawAccountNumber = scanner.nextLine();
                     
-                    BankAccount wAcc = bank.findAccount(wAccountNumber);
+                    BankAccount withdrawAcc = bank.findAccount(withdrawAccountNumber);
 
-                    if(wAcc == null){
-                        System.out.println("Accout not found");
+                    if(withdrawAcc == null){
+                        System.out.println("Account not found!");
                         break;
                     }
 
                     System.out.println("Enter the withdraw amount: ");
-                    double wAmount = scanner.nextDouble();
+                    double withdrawAmount = scanner.nextDouble();
                     scanner.nextLine();
-                    wAcc.withdraw(wAmount);  
-                    break;                  
+                    withdrawAcc.withdraw(withdrawAmount);  
+                    break; 
+                case 5:
+                    System.out.println("Enter your account number: ");
+                    String senderAccountNumber = scanner.nextLine();
+                    BankAccount senderAcc = bank.findAccount(senderAccountNumber);
+
+                    System.out.println("Enter the receiver account number: ");
+                    String receiverAccountNumber = scanner.nextLine();
+                    BankAccount receiverAcc = bank.findAccount(receiverAccountNumber);
+
+                    if(senderAcc == null){
+                        System.out.println("Sender Account not found!");
+                        break;
+                    }
+                    else if(receiverAcc == null){
+                        System.out.println("Receiver Account not found");
+                        break;
+                    }
+                    
+                    System.out.println("Enter the transfer amount: ");
+                    double transferAmount = scanner.nextDouble();
+                    scanner.nextLine();
+                    bank.transfer(senderAccountNumber, receiverAccountNumber, transferAmount);
+                    break;
+                case 6:
+                    ArrayList<BankAccount> accounts = new ArrayList<>();
+
+                    if(accounts.isEmpty()){
+                        System.out.println("The accounts are empty. Add account to view the details.");
+                        break;
+                    }
+
+                    for(BankAccount acc : accounts){
+                        System.out.println("-----------------------------------------------");
+                        System.out.println("Account Number: " + acc.getAccountNumber());
+                        System.out.println("Account holder's name: " + acc.getAccountHolderName());
+                        System.out.println("Balance: " + acc.getBalance());
+                        System.out.println("-----------------------------------------------");
+                    }
+                    break;
                 default:
                     System.out.println("Invalid option! Please choose a valid option.");
                     break;
