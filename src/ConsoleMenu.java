@@ -4,12 +4,13 @@ public class ConsoleMenu {
     private Bank bank;
     private Scanner scanner;
 
-    public ConsoleMenu(Bank bank){
-    this.bank = bank; 
-    this.scanner = new Scanner(System.in);
+    public ConsoleMenu(Bank bank) {
+        this.bank = bank;
+        this.scanner = new Scanner(System.in);
     }
 
-    public void displayMenu(){
+    public void displayMenu() {
+        System.out.println();
         System.out.println("===== BANKING APPLICATION =====");
         System.out.println("1. Create an account");
         System.out.println("2. View account details");
@@ -18,14 +19,15 @@ public class ConsoleMenu {
         System.out.println("5. Transfer Money");
         System.out.println("6. List all accounts");
         System.out.println("0. Exit");
-        System.out.println("Choose an option: ");
+        System.out.print("Choose an option: ");
     }
 
-    public void start(){
+    public void start() {
         boolean running = true;
-        
-        while(running){
-            displayMenu();
+
+        while (running) {
+            try {
+                displayMenu();
             int option = scanner.nextInt();
             scanner.nextLine();
             switch (option) {
@@ -33,18 +35,18 @@ public class ConsoleMenu {
                     running = false;
                     break;
                 case 1:
-                    System.out.println("Please Enter your name: ");
+                    System.out.print("Please Enter your name: ");
                     String name = scanner.nextLine();
                     BankAccount newAccount = bank.createAccount(name);
                     System.out.println("Your account number is: " + newAccount.getAccountNumber());
                     break;
                 case 2:
-                    System.out.println("Enter your account number: ");
+                    System.out.print("Enter your account number: ");
                     String accountNumber = scanner.nextLine();
 
                     BankAccount account = bank.findAccount(accountNumber);
 
-                    if(account == null){
+                    if (account == null) {
                         System.out.println("Account not found!");
                         break;
                     }
@@ -55,68 +57,67 @@ public class ConsoleMenu {
                     break;
 
                 case 3:
-                    System.out.println("Enter your account number: ");
+                    System.out.print("Enter your account number: ");
                     String depositAccountNumber = scanner.nextLine();
 
                     BankAccount depositAcc = bank.findAccount(depositAccountNumber);
 
-                    if(depositAcc == null){
+                    if (depositAcc == null) {
                         System.out.println("Account not found!");
                         break;
                     }
-                    System.out.println("Enter the deposit amount: ");
+                    System.out.print("Enter the deposit amount: ");
                     double depositAmount = scanner.nextDouble();
                     scanner.nextLine();
                     depositAcc.deposit(depositAmount);
                     break;
                 case 4:
-                    System.out.println("Enter your account number: ");
+                    System.out.print("Enter your account number: ");
                     String withdrawAccountNumber = scanner.nextLine();
-                    
+
                     BankAccount withdrawAcc = bank.findAccount(withdrawAccountNumber);
 
-                    if(withdrawAcc == null){
+                    if (withdrawAcc == null) {
                         System.out.println("Account not found!");
                         break;
                     }
 
-                    System.out.println("Enter the withdraw amount: ");
+                    System.out.print("Enter the withdraw amount: ");
                     double withdrawAmount = scanner.nextDouble();
                     scanner.nextLine();
-                    withdrawAcc.withdraw(withdrawAmount);  
-                    break; 
+                    withdrawAcc.withdraw(withdrawAmount);
+                    break;
                 case 5:
-                    System.out.println("Enter your account number: ");
+                    System.out.print("Enter your account number: ");
                     String senderAccountNumber = scanner.nextLine();
                     BankAccount senderAcc = bank.findAccount(senderAccountNumber);
 
-                    System.out.println("Enter the receiver account number: ");
+                    System.out.print("Enter the receiver account number: ");
                     String receiverAccountNumber = scanner.nextLine();
                     BankAccount receiverAcc = bank.findAccount(receiverAccountNumber);
 
-                    if(senderAcc == null){
+                    if (senderAcc == null) {
                         System.out.println("Sender Account not found!");
                         break;
-                    }
-                    else if(receiverAcc == null){
+                    } else if (receiverAcc == null) {
                         System.out.println("Receiver Account not found");
                         break;
                     }
-                    
-                    System.out.println("Enter the transfer amount: ");
+
+                    System.out.print("Enter the transfer amount: ");
                     double transferAmount = scanner.nextDouble();
                     scanner.nextLine();
                     bank.transfer(senderAccountNumber, receiverAccountNumber, transferAmount);
                     break;
                 case 6:
-                    ArrayList<BankAccount> accounts = new ArrayList<>();
+                    ArrayList<BankAccount> accounts = bank.listAccounts();
 
-                    if(accounts.isEmpty()){
+                    if (accounts.isEmpty()) {
                         System.out.println("The accounts are empty. Add account to view the details.");
                         break;
                     }
 
-                    for(BankAccount acc : accounts){
+                    for (BankAccount acc : accounts) {
                         System.out.println("-----------------------------------------------");
                         System.out.println("Account Number: " + acc.getAccountNumber());
                         System.out.println("Account holder's name: " + acc.getAccountHolderName());
@@ -127,8 +128,12 @@ public class ConsoleMenu {
                 default:
                     System.out.println("Invalid option! Please choose a valid option.");
                     break;
+                }
+            }
+            catch (InputMismatchException e){
+                System.out.println("Please enter a valid number.");
+                scanner.nextLine();
             }
         }
     }
 }
-

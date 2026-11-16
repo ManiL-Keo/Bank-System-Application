@@ -22,7 +22,7 @@ public class Bank {
 
     public BankAccount findAccount(String accountNumber){
         for(BankAccount account : accounts){
-            if(account.getAccountNumber() == accountNumber){
+            if(account.getAccountNumber().equals(accountNumber)){
                 return account;
             }
         }
@@ -54,7 +54,7 @@ public class Bank {
 
     }
 
-    public  ArrayList<BankAccount> listAccount(){
+    public  ArrayList<BankAccount> listAccounts(){
         return new ArrayList<>(accounts);
     }
 };
